@@ -2,7 +2,8 @@ version: '3'
 services:
   www:
     build: ./
-    image: webserver
+    image: manchenkoff/server
     ports:
+      # Apache ports
       - 80:80
       - 443:443

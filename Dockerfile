@@ -51,7 +51,7 @@ WORKDIR /var/www
 
 ### Base command (without overload)
 ADD conf/entry.sh /etc/entry.sh
-ENTRYPOINT ["sh", "/etc/entry.sh"]
+ENTRYPOINT ["/bin/bash", "/etc/entry.sh"]
 
 ### Base command (with overload)
 #CMD some-command
