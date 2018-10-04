@@ -6,6 +6,7 @@ RUN apt-get update
 
 ### Install Apache
 RUN apt-get install -y apache2 apache2-utils curl gnupg
+RUN a2enmod rewrite
 
 ### Git, Python, Perl, NodeJS, NPM, PHP 7
 ENV TZ=Europe/Moscow
