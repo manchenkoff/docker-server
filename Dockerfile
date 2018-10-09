@@ -5,7 +5,7 @@ MAINTAINER Artem Manchenkov <artyom@manchenkoff.me>
 RUN apt-get update
 
 ### Install Apache
-RUN apt-get install -y apache2 apache2-utils curl gnupg
+RUN apt-get install -y apache2 apache2-utils curl gnupg wget
 RUN a2enmod rewrite
 
 ### Git, Python, Perl, NodeJS, NPM, PHP 7
