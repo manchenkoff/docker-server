@@ -31,7 +31,7 @@ services:
 ### Volumes
 
 Additional PHP config
-- ```/etc/php/7.2/cli/conf.d/project.ini```
+- ```/etc/php/7.2/apache2/conf.d/project.ini```
 
 Supervisor tasks
 - ```/etc/supervisor/conf.d/default.conf```
