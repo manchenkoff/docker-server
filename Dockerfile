@@ -41,6 +41,7 @@ EXPOSE 80 443
 ### Set configrations
 ADD conf/php.ini /etc/php/7.2/cli/php.ini
 ADD conf/supervisor.conf /etc/supervisor/conf.d/default.conf
+ADD conf/apache2.conf /etc/apache2/apache2.conf
 
 RUN rm -R /etc/apache2/sites-enabled/* /etc/apache2/sites-available/* /var/www/*
 ADD conf/vhost.conf /etc/apache2/sites-enabled/host.conf
