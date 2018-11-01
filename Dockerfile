@@ -35,11 +35,12 @@ RUN apt-get install -y \
 RUN apt-get install -y composer supervisor
 RUN update-rc.d supervisor defaults
 
-### Expose ports
+### Expose ports [Apache, Apache SSL, XDebug]
 EXPOSE 80 443
 
 ### Set configrations
 ADD conf/php.ini /etc/php/7.2/apache2/php.ini
+ADD conf/xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
 ADD conf/supervisor.conf /etc/supervisor/conf.d/default.conf
 ADD conf/apache2.conf /etc/apache2/apache2.conf
 
