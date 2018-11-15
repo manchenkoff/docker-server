@@ -7,7 +7,7 @@ services:
       - 80:80
       - 443:443
     environment:
-      XDEBUG_CONFIG: remote_host=192.168.0.105 # XDebug support
+      XDEBUG_CONFIG: remote_host=host.docker.internal
     volumes:
       - ./src:/var/www
     links:

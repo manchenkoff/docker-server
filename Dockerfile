@@ -31,6 +31,9 @@ RUN apt-get install -y \
     php-memcached php-ftp php-imap \
     php-exif php-sqlite3 php-curl
 
+RUN apt-get update &&
+    apt-get install php-memcache
+
 ### PHP Composer, Supervisor
 RUN apt-get install -y composer supervisor
 RUN update-rc.d supervisor defaults
