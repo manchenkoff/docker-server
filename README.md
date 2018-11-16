@@ -19,25 +19,27 @@ version: '3'
 services:
   server:
     image: manchenkoff/server
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
     ports:
-      # Apache ports
       - 80:80
       - 443:443
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal
     volumes:
       - ./src:/var/www
+      
       # See volumes description below
 ```
 
 ### Volumes
 
-Additional PHP config
-- ```/etc/php/7.2/apache2/conf.d/project.ini```
-
 Supervisor tasks
-- ```/etc/supervisor/conf.d/default.conf```
+- ```/etc/supervisor/conf.d/...``` -> **worker.default.conf**
 
-Apache virtual host config
-- ```/etc/apache2/sites-enabled/host.conf```
+Apache virtual hosts config
+- ```/etc/apache2/sites-enabled/...``` -> **default.conf**
 
 Web directory
-- ```/var/www```
+- ```/var/www``` -> **/src** directory

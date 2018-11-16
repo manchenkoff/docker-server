@@ -31,33 +31,35 @@ RUN apt-get install -y \
     php-memcached php-ftp php-imap \
     php-exif php-sqlite3 php-curl
 
-RUN apt-get update &&
+RUN apt-get update && \
     apt-get install php-memcache
 
 ### PHP Composer, Supervisor
 RUN apt-get install -y composer supervisor
-RUN update-rc.d supervisor defaults
 
 ### Expose ports [Apache, Apache SSL, XDebug]
 EXPOSE 80 443
 
 ### Set configrations
-ADD conf/php.ini /etc/php/7.2/apache2/php.ini
-ADD conf/xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
-ADD conf/supervisor.conf /etc/supervisor/conf.d/default.conf
-ADD conf/apache2.conf /etc/apache2/apache2.conf
+ADD ./docker/conf/php/php.ini /etc/php/7.2/apache2/php.ini
+ADD ./docker/conf/php/xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
+
+ADD ./docker/conf/apache/apache2.conf /etc/apache2/apache2.conf
+ADD ./docker/conf/apache/ports.conf /etc/apache2/ports.conf
+
+#COPY ./docker/conf/supervisor /etc/supervisor/conf.d
 
 RUN rm -R /etc/apache2/sites-enabled/* /etc/apache2/sites-available/* /var/www/*
-ADD conf/vhost.conf /etc/apache2/sites-enabled/host.conf
+COPY ./docker/conf/apache/hosts /etc/apache2/sites-enabled
 
 ### Copy PHP project
-COPY src /var/www
+COPY ./src /var/www
 
 WORKDIR /var/www
 
 ### Base command (without overload)
-ADD conf/entry.sh /etc/entry.sh
-ENTRYPOINT ["/bin/bash", "/etc/entry.sh"]
+ADD ./docker/conf/entry.sh /usr/local/bin/start-container
+ENTRYPOINT ["/bin/bash", "/usr/local/bin/start-container"]
 
 ### Base command (with overload)
 #CMD some-command
