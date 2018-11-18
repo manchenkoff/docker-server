@@ -27,6 +27,7 @@ services:
       - 443:443
     environment:
       XDEBUG_CONFIG: remote_host=host.docker.internal
+      PHP_IDE_CONFIG: serverName=localhost
     volumes:
       - ./src:/var/www
       
