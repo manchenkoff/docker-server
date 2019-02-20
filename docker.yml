@@ -2,6 +2,7 @@ version: '3'
 services:
   # Apache
   www:
+    container_name: server_www
     image: manchenkoff/server
     build:
       context: ./
