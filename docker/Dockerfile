@@ -4,9 +4,10 @@ MAINTAINER Artem Manchenkov <artyom@manchenkoff.me>
 ### Update repositories
 RUN apt-get update
 
-### Install Apache
+### Install Apache with modules (rewrite, ssl)
 RUN apt-get install -y apache2 apache2-utils curl gnupg wget
 RUN a2enmod rewrite
+RUN a2enmod ssl
 
 ### Git, Python, Perl, NodeJS, NPM, PHP 7
 ENV TZ=Europe/Moscow
@@ -37,7 +38,7 @@ RUN apt-get update && \
 ### PHP Composer, Supervisor
 RUN apt-get install -y composer supervisor
 
-### Expose ports [Apache, Apache SSL, XDebug]
+### Expose ports [Apache, SSL]
 EXPOSE 80 443
 
 ### Set configrations
@@ -52,8 +53,11 @@ ADD ./docker/conf/apache/ports.conf /etc/apache2/ports.conf
 RUN rm -R /etc/apache2/sites-enabled/* /etc/apache2/sites-available/* /var/www/*
 COPY ./docker/conf/apache/hosts /etc/apache2/sites-enabled
 
-### Copy PHP project
-COPY ./src /var/www
+### Setup SSL certificate
+COPY ./docker/conf/apache/certs /etc/apache2/ssl
+
+### Copy current project
+COPY ./ /var/www
 
 WORKDIR /var/www
 

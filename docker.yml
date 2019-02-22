@@ -2,6 +2,7 @@ version: '3'
 services:
   # Apache
   www:
+    container_name: server_www
     image: manchenkoff/server
     build:
       context: ./
@@ -13,4 +14,4 @@ services:
       XDEBUG_CONFIG: remote_host=host.docker.internal
       PHP_IDE_CONFIG: serverName=localhost
     volumes:
-      - ./src:/var/www
+      - ./:/var/www
