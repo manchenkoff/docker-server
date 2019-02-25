@@ -6,6 +6,7 @@ RUN apt-get update
 
 ### Install Apache with modules (rewrite, ssl)
 RUN apt-get install -y apache2 apache2-utils curl gnupg wget
+
 RUN a2enmod rewrite
 RUN a2enmod ssl
 
@@ -20,6 +21,7 @@ RUN apt-get install -y git python3 perl \
     php nano
 
 ### PHP Extensions
+RUN apt-get update
 RUN apt-get install -y \
     php-pdo php-pdo-mysql \
     php-pdo-pgsql php-pdo-sqlite \

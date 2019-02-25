@@ -51,7 +51,7 @@ Web directory
 
 ### Apache SSL
 
-If you want to use HTTPS with Apache, please generate and mount (docker volumes) the certificate file by executing the following command
+If you want to use HTTPS with Apache, please generate the SSL certificate (before build container) by executing the following command
 
 ```bash
 openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 -subj \
@@ -59,8 +59,8 @@ openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 -subj \
 -keyout ./docker/conf/apache/certs/ssl.key -out ./docker/conf/apache/certs/ssl.crt
 ```
 
-C=Country code (2 characters)
-ST=State province
-L=Locality
-O=Organization name
-CN=FQDN or Name
+- **C** = Country code (2 characters)
+- **ST** = State / Province
+- **L** = Locality / City
+- **O** = Organization name
+- **CN** = FQDN or Full name
