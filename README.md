@@ -20,9 +20,6 @@ services:
   server:
     container_name: server_www
     image: manchenkoff/server
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile
     ports:
       - 80:80
       - 443:443
@@ -30,7 +27,7 @@ services:
       XDEBUG_CONFIG: remote_host=host.docker.internal
       PHP_IDE_CONFIG: serverName=localhost
     volumes:
-      - ./:/var/www
+      - .:/var/www
       
       # See volumes description below
 ```
@@ -43,24 +40,5 @@ Supervisor tasks
 Apache virtual hosts config
 - `/etc/apache2/sites-enabled/` -> `./docker/conf/apache/hosts/`
 
-Apache SSL certificate
-- `/etc/apache2/ssl/` -> `./docker/conf/apache/certs/`
-
 Web directory
-- `/var/www` -> current project directory `./`
-
-### Apache SSL
-
-If you want to use HTTPS with Apache, please generate the SSL certificate (before build container) by executing the following command
-
-```bash
-openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 -subj \
-"/C=RU/ST=Moscow-State/L=Moscow/O=Manchenkov/CN=project.local" \
--keyout ./docker/conf/apache/certs/ssl.key -out ./docker/conf/apache/certs/ssl.crt
-```
-
-- **C** = Country code (2 characters)
-- **ST** = State / Province
-- **L** = Locality / City
-- **O** = Organization name
-- **CN** = FQDN or Full name
+- `/var/www` -> current project directory `.`

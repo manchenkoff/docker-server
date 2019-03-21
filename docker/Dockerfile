@@ -56,7 +56,12 @@ RUN rm -R /etc/apache2/sites-enabled/* /etc/apache2/sites-available/* /var/www/*
 COPY ./docker/conf/apache/hosts /etc/apache2/sites-enabled
 
 ### Setup SSL certificate
-COPY ./docker/conf/apache/certs /etc/apache2/ssl
+RUN mkdir /etc/apache2/ssl
+RUN openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 -subj \
+    "/C=RU/ST=Moscow-State/L=Moscow/O=Manchenkov/CN=localhost" \
+    -keyout /etc/apache2/ssl/ssl.key -out /etc/apache2/ssl/ssl.crt
+
+#COPY ./docker/conf/apache/certs /etc/apache2/ssl
 
 ### Copy current project
 COPY ./ /var/www
