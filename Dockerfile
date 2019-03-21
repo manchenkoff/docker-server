@@ -23,7 +23,7 @@ RUN apt-get install -y git python3 perl \
 ### PHP Extensions
 RUN apt-get update
 RUN apt-get install -y \
-    php-pdo php-pdo-mysql \
+    php-pdo php-tidy php-pdo-mysql \
     php-pdo-pgsql php-pdo-sqlite \
     php-mbstring php-tokenizer \
     php-xml php-simplexml php-zip \
@@ -44,16 +44,16 @@ RUN apt-get install -y composer supervisor
 EXPOSE 80 443
 
 ### Set configrations
-ADD ./docker/conf/php/php.ini /etc/php/7.2/apache2/php.ini
-ADD ./docker/conf/php/xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
+ADD ./conf/php/php.ini /etc/php/7.2/apache2/php.ini
+ADD ./conf/php/xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
 
-ADD ./docker/conf/apache/apache2.conf /etc/apache2/apache2.conf
-ADD ./docker/conf/apache/ports.conf /etc/apache2/ports.conf
+ADD ./conf/apache/apache2.conf /etc/apache2/apache2.conf
+ADD ./conf/apache/ports.conf /etc/apache2/ports.conf
 
 #COPY ./docker/conf/supervisor /etc/supervisor/conf.d
 
 RUN rm -R /etc/apache2/sites-enabled/* /etc/apache2/sites-available/* /var/www/*
-COPY ./docker/conf/apache/hosts /etc/apache2/sites-enabled
+COPY ./conf/apache/hosts /etc/apache2/sites-enabled
 
 ### Setup SSL certificate
 RUN mkdir /etc/apache2/ssl
@@ -64,12 +64,12 @@ RUN openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 -subj \
 #COPY ./docker/conf/apache/certs /etc/apache2/ssl
 
 ### Copy current project
-COPY ./ /var/www
+COPY ./src /var/www
 
 WORKDIR /var/www
 
 ### Base command (without overload)
-ADD ./docker/conf/entry.sh /usr/local/bin/start-container
+ADD ./conf/entry.sh /usr/local/bin/start-container
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/start-container"]
 
 ### Base command (with overload)

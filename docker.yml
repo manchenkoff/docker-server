@@ -4,9 +4,7 @@ services:
   www:
     container_name: server_www
     image: manchenkoff/server
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile
+    build: ./
     ports:
       - 80:80
       - 443:443
@@ -14,4 +12,4 @@ services:
       XDEBUG_CONFIG: remote_host=host.docker.internal
       PHP_IDE_CONFIG: serverName=localhost
     volumes:
-      - ./:/var/www
+      - ./src:/var/www
